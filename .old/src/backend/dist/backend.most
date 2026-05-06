@@ -1,0 +1,445 @@
+// Version: 1.0.0
+type AdminAction__919338929 =
+  {#banUser; #deleteDoc; #reindex; #updateTier; #uploadDoc};
+type AdminLog__279303283 =
+  {
+    action : AdminAction__919338929;
+    adminId : Principal;
+    id : Nat;
+    target : Text;
+    timestamp : Int
+  };
+type AgentChain__347981555 =
+  {
+    currentStep : Nat;
+    goal : Text;
+    id : Nat;
+    status : AgentStatus__682045318;
+    tasks : [AgentTask__540471849]
+  };
+type AgentStatus__682045318 = {#complete; #failed; #idle; #running};
+type AgentStreamStep__15956839 =
+  {
+    agentType : Text;
+    completedAt : Int;
+    output : Text;
+    startedAt : Int;
+    status : Text
+  };
+type AgentTask__540471849 =
+  {
+    agentType : AgentType__593675116;
+    id : Nat;
+    input : Text;
+    output : ?Text;
+    status : AgentStatus__682045318;
+    timestamp : Int
+  };
+type AgentType__593675116 =
+  {#critic; #executor; #memory; #planner; #research};
+type AnalyticsEvent__38019333 =
+  {eventType : Text; metadata : Text; timestamp : Int; userId : Principal};
+type BoundingBox__561253555 =
+  {height : Float; width : Float; x : Float; y : Float};
+type CallRecord__52248411 =
+  {
+    callSid : Text;
+    callerPhone : Text;
+    duration : Nat;
+    id : Nat;
+    status : Text;
+    timestamp : Int;
+    transcript : Text
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DetectionHistoryRecord__785334240 =
+  {
+    cameraId : Text;
+    id : Nat;
+    objects : [DetectionObject__265855794];
+    timestamp : Int
+  };
+type DetectionObject__265855794 =
+  {
+    bbox : BoundingBox__561253555;
+    confidence : Float;
+    highAlert : Bool;
+    name : Text
+  };
+type DocumentType__345386626 = {#docx; #pdf; #txt; #url};
+type DroneAlert__37101818 =
+  {
+    alertType : Text;
+    description : Text;
+    droneId : Nat;
+    id : Nat;
+    timestamp : Int
+  };
+type DroneState__389519418 =
+  {
+    altitude : Float;
+    battery : Int;
+    id : Nat;
+    lat : Float;
+    lng : Float;
+    speed : Float;
+    status : DroneStatus__946226012;
+    timestamp : Int
+  };
+type DroneStatus__946226012 = {#emergency; #flying; #idle; #landing};
+type GeofenceAlert__912418882 =
+  {alertType : Text; assetId : Nat; id : Nat; timestamp : Int; zoneId : Nat};
+type GeofenceZone__805625094 =
+  {
+    centerLat : Float;
+    centerLng : Float;
+    id : Nat;
+    isActive : Bool;
+    name : Text;
+    radius : Float
+  };
+type IndexStatus__179887389 = {#failed; #indexed; #pending};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type IoTDevice__435365445 =
+  {
+    deviceType : Text;
+    id : Nat;
+    isOnline : Bool;
+    lastSeen : Int;
+    name : Text;
+    state : Text
+  };
+type KnowledgeChunk__582692231 =
+  {
+    chunkIndex : Nat;
+    docId : Nat;
+    embeddingVector : [Float];
+    id : Nat;
+    similarity : Float;
+    text : Text
+  };
+type KnowledgeDocument__483290066 =
+  {
+    chunks : [KnowledgeChunk__582692231];
+    content : Text;
+    docType : DocumentType__345386626;
+    id : Nat;
+    indexStatus : IndexStatus__179887389;
+    title : Text;
+    uploadedAt : Int;
+    userId : Principal
+  };
+type Language__436420045 = {#english; #hindi; #nagpuri};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type LegalClause__358347256 =
+  {
+    clauseType : Text;
+    docId : Nat;
+    endPos : Int;
+    id : Nat;
+    startPos : Int;
+    text : Text
+  };
+type LegalDocument__671158628 =
+  {
+    clauses : [LegalClause__358347256];
+    content : Text;
+    id : Nat;
+    summary : ?Text;
+    title : Text;
+    uploadedAt : Int;
+    userId : Principal
+  };
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Message__445843841 =
+  {content : Text; id : Nat; role : Text; timestamp : Int};
+type MqttDeviceHistory__312065311 =
+  {deviceId : Nat; state : Text; timestamp : Int; value : Float};
+type MqttDevice__619911333 =
+  {
+    deviceType : Text;
+    id : Nat;
+    isOnline : Bool;
+    lastUpdate : Int;
+    state : Text;
+    topic : Text;
+    value : Float
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Settings__430587319 =
+  {apiKey : Text; glowColor : Text; personality : Text};
+type StreamChunk__937759020 =
+  {
+    chunkIndex : Nat;
+    content : Text;
+    id : Nat;
+    isFinal : Bool;
+    timestamp : Int
+  };
+type StreamSession__684173975 =
+  {
+    agentSteps : [AgentStreamStep__15956839];
+    chunks : [StreamChunk__937759020];
+    createdAt : Int;
+    id : Nat;
+    status : Text;
+    userId : Principal
+  };
+type SubscriptionTier__400714388 = {#enterprise; #free; #pro};
+type Subscription__929711557 =
+  {
+    active : Bool;
+    startDate : Int;
+    tier : SubscriptionTier__400714388;
+    userId : Principal
+  };
+type TrackingAsset__184358829 =
+  {
+    battery : ?Int;
+    heading : Float;
+    id : Nat;
+    lat : Float;
+    lng : Float;
+    name : Text;
+    speed : Float;
+    status : Text;
+    timestamp : Int
+  };
+type TransactionAction__497494727 = {#buy; #sell};
+type Transaction__422900738 =
+  {
+    action : TransactionAction__497494727;
+    id : Text;
+    note : Text;
+    price : Float;
+    quantity : Nat;
+    symbol : Text;
+    timestamp : Int;
+    userId : Text
+  };
+type UserId__911210446 = Principal;
+type UserMetrics__792242106 =
+  {
+    agentTaskCount : Nat;
+    lastActive : Int;
+    messageCount : Nat;
+    userId : Principal;
+    voiceCount : Nat
+  };
+type UserPreference__523830868 =
+  {key : Text; updatedAt : Int; userId : Text; value : Text; weight : Float};
+type UserProfile__775633023 =
+  {
+    createdAt : Int;
+    email : Text;
+    id : UserId__911210446;
+    name : Text;
+    role : UserRole__549269184;
+    tier : SubscriptionTier__400714388
+  };
+type UserRole__549269184 = {#admin; #user};
+type VoiceProfile__857625851 =
+  {
+    enrolledAt : Int;
+    enrolledPhrases : Nat;
+    id : Text;
+    mfccFeatures : [Float];
+    name : Text;
+    relationship : Text;
+    userId : Text
+  };
+type VoiceSession__810704679 =
+  {
+    id : Nat;
+    language : Language__436420045;
+    synthesis : Text;
+    timestamp : Int;
+    transcription : Text;
+    userId : Principal
+  };
+type VoiceSettings__884528193 =
+  {
+    autoPlay : Bool;
+    continuousMode : Bool;
+    language : Language__436420045;
+    pitch : Float;
+    speed : Float
+  };
+actor {
+  stable _assetsInit : ();
+  stable _droneInit : ();
+  stable _iotInit : ();
+  stable adminLogNextId : {var value : Nat};
+  stable adminLogs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AdminLog__279303283]];
+      var elementIndex : Nat__490723111
+    };
+  stable agentChains :
+    {
+      var root : Node__46230540<Nat, AgentChain__347981555>;
+      var size : Nat__490723111
+    };
+  stable agentMetrics :
+    {var completedTasks : Nat; var failedTasks : Nat; var totalTasks : Nat};
+  stable analyticsEvents :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AnalyticsEvent__38019333]];
+      var elementIndex : Nat__490723111
+    };
+  stable bannedUsers :
+    {var root : Node__46230540<Principal, Bool>; var size : Nat__490723111};
+  stable callLogs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CallRecord__52248411]];
+      var elementIndex : Nat__490723111
+    };
+  stable detectionHistory :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?DetectionHistoryRecord__785334240]];
+      var elementIndex : Nat__490723111
+    };
+  stable droneAlerts :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?DroneAlert__37101818]];
+      var elementIndex : Nat__490723111
+    };
+  stable drones :
+    {
+      var root : Node__46230540<Nat, DroneState__389519418>;
+      var size : Nat__490723111
+    };
+  stable faceEncodings :
+    {var root : Node__46230540<Principal, Text>; var size : Nat__490723111};
+  stable geneticStore :
+    {
+      var root :
+        Node__46230540<Text, List__415060402<UserPreference__523830868>>;
+      var size : Nat__490723111
+    };
+  stable geofenceAlerts :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?GeofenceAlert__912418882]];
+      var elementIndex : Nat__490723111
+    };
+  stable geofences :
+    {
+      var root : Node__46230540<Nat, GeofenceZone__805625094>;
+      var size : Nat__490723111
+    };
+  stable iotDevices :
+    {
+      var root : Node__46230540<Nat, IoTDevice__435365445>;
+      var size : Nat__490723111
+    };
+  stable knowledgeDocs :
+    {
+      var root : Node__46230540<Nat, KnowledgeDocument__483290066>;
+      var size : Nat__490723111
+    };
+  stable legalDocs :
+    {
+      var root : Node__46230540<Nat, LegalDocument__671158628>;
+      var size : Nat__490723111
+    };
+  stable messages :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Message__445843841]];
+      var elementIndex : Nat__490723111
+    };
+  stable mqttBrokerUrl : {var value : Text};
+  stable mqttDevices :
+    {
+      var root : Node__46230540<Nat, MqttDevice__619911333>;
+      var size : Nat__490723111
+    };
+  stable mqttHistory :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MqttDeviceHistory__312065311]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextCallId : {var value : Nat};
+  stable nextChainId : {var value : Nat};
+  stable nextDetectionId : {var value : Nat};
+  stable nextDocId : {var value : Nat};
+  stable nextDroneAlertId : {var value : Nat};
+  stable nextGeofenceAlertId : {var value : Nat};
+  stable nextGeofenceId : {var value : Nat};
+  stable nextLegalDocId : {var value : Nat};
+  stable nextMessageId : {var value : Nat};
+  stable nextStreamId : {var value : Nat};
+  stable nextVoiceSessionId : {var value : Nat};
+  stable settingsState : {var value : Settings__430587319};
+  stable streamSessions :
+    {
+      var root : Node__46230540<Nat, StreamSession__684173975>;
+      var size : Nat__490723111
+    };
+  stable subscriptions :
+    {
+      var root : Node__46230540<Principal, Subscription__929711557>;
+      var size : Nat__490723111
+    };
+  stable systemStats :
+    {var startTime : Int; var totalAgentTasks : Nat; var totalMessages : Nat};
+  stable trackingAssets :
+    {
+      var root : Node__46230540<Nat, TrackingAsset__184358829>;
+      var size : Nat__490723111
+    };
+  stable tradingTransactions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Transaction__422900738]];
+      var elementIndex : Nat__490723111
+    };
+  stable twilioSettings :
+    {var accountSid : Text; var authToken : Text; var fromNumber : Text};
+  stable txIdCounter : {var value : Nat};
+  stable userMetricsStore :
+    {
+      var root : Node__46230540<Principal, UserMetrics__792242106>;
+      var size : Nat__490723111
+    };
+  stable users :
+    {
+      var root : Node__46230540<Principal, UserProfile__775633023>;
+      var size : Nat__490723111
+    };
+  stable voiceSessionsMap :
+    {
+      var root : Node__46230540<Nat, VoiceSession__810704679>;
+      var size : Nat__490723111
+    };
+  stable voiceSettingsMap :
+    {
+      var root : Node__46230540<Principal, VoiceSettings__884528193>;
+      var size : Nat__490723111
+    };
+  stable vpIdCounter : {var value : Nat};
+  stable vpStore :
+    {
+      var root :
+        Node__46230540<Text, List__415060402<VoiceProfile__857625851>>;
+      var size : Nat__490723111
+    }
+};

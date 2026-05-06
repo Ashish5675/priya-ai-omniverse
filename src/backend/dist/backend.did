@@ -1,0 +1,626 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type YoloDetectionResult = 
+ record {
+   cameraId: text;
+   confidence: float64;
+   objects: vec DetectionObject;
+   timestamp: int;
+ };
+type YoloDetectionRequest = 
+ record {
+   cameraId: text;
+   imageData: text;
+ };
+type VoiceSettings = 
+ record {
+   autoPlay: bool;
+   continuousMode: bool;
+   language: Language;
+   pitch: float64;
+   speed: float64;
+ };
+type VoiceSession = 
+ record {
+   id: nat;
+   language: Language;
+   synthesis: text;
+   timestamp: int;
+   transcription: text;
+   userId: principal;
+ };
+type VoiceProfile = 
+ record {
+   enrolledAt: int;
+   enrolledPhrases: nat;
+   id: text;
+   mfccFeatures: vec float64;
+   name: text;
+   relationship: text;
+   userId: text;
+ };
+type VoiceMatch = 
+ record {
+   confidence: float64;
+   name: text;
+   profileId: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   user;
+ };
+type UserProfile = 
+ record {
+   createdAt: int;
+   email: text;
+   id: UserId;
+   name: text;
+   role: UserRole;
+   tier: SubscriptionTier;
+ };
+type UserPreference = 
+ record {
+   key: text;
+   updatedAt: int;
+   userId: text;
+   value: text;
+   weight: float64;
+ };
+type UserMetrics = 
+ record {
+   agentTaskCount: nat;
+   lastActive: int;
+   messageCount: nat;
+   userId: principal;
+   voiceCount: nat;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type TransactionAction = 
+ variant {
+   buy;
+   sell;
+ };
+type Transaction = 
+ record {
+   action: TransactionAction;
+   id: text;
+   note: text;
+   price: float64;
+   quantity: nat;
+   symbol: text;
+   timestamp: int;
+   userId: text;
+ };
+type TrackingAsset = 
+ record {
+   battery: opt int;
+   heading: float64;
+   id: nat;
+   lat: float64;
+   lng: float64;
+   name: text;
+   speed: float64;
+   status: text;
+   timestamp: int;
+ };
+type TierBreakdown = 
+ record {
+   enterprise: nat;
+   free: nat;
+   pro: nat;
+ };
+type SystemMetrics = 
+ record {
+   activeUsers: nat;
+   mrr: float64;
+   totalAgentTasks: nat;
+   totalMessages: nat;
+   totalUsers: nat;
+   totalVoiceCalls: nat;
+ };
+type SubscriptionTier = 
+ variant {
+   enterprise;
+   free;
+   pro;
+ };
+type SubscriptionStatus = 
+ record {
+   active: bool;
+   startDate: int;
+   tier: SubscriptionTier;
+ };
+type StreamSession = 
+ record {
+   agentSteps: vec AgentStreamStep;
+   chunks: vec StreamChunk;
+   createdAt: int;
+   id: nat;
+   status: text;
+   userId: principal;
+ };
+type StreamChunk = 
+ record {
+   chunkIndex: nat;
+   content: text;
+   id: nat;
+   isFinal: bool;
+   timestamp: int;
+ };
+type StockSymbol = 
+ record {
+   name: text;
+   sector: text;
+   symbol: text;
+ };
+type StockPrice = 
+ record {
+   close: float64;
+   date: int;
+   high: float64;
+   low: float64;
+   open: float64;
+   symbol: text;
+   volume: nat;
+ };
+type Settings = 
+ record {
+   apiKey: text;
+   glowColor: text;
+   personality: text;
+ };
+type RevenueMetrics = 
+ record {
+   arpu: float64;
+   churnRate: float64;
+   month: text;
+   mrr: float64;
+   tierBreakdown: TierBreakdown;
+ };
+type RegisterResult = 
+ variant {
+   err: text;
+   ok: UserProfile;
+ };
+type Portfolio = 
+ record {
+   holdings: vec Holding;
+   lastUpdated: int;
+   totalValue: float64;
+   userId: text;
+ };
+type MqttDeviceHistory = 
+ record {
+   deviceId: nat;
+   state: text;
+   timestamp: int;
+   value: float64;
+ };
+type MqttDevice = 
+ record {
+   deviceType: text;
+   id: nat;
+   isOnline: bool;
+   lastUpdate: int;
+   state: text;
+   topic: text;
+   value: float64;
+ };
+type MqttCommandResult = 
+ record {
+   deviceId: nat;
+   newState: text;
+   success: bool;
+   timestamp: int;
+ };
+type MqttCommand = 
+ record {
+   action: text;
+   payload: text;
+   topic: text;
+ };
+type Message = 
+ record {
+   content: text;
+   id: nat;
+   role: text;
+   timestamp: int;
+ };
+type LoginResult = 
+ variant {
+   err: text;
+   ok: UserProfile;
+ };
+type LegalExport = 
+ record {
+   content: text;
+   docId: nat;
+   format: text;
+ };
+type LegalDocument = 
+ record {
+   clauses: vec LegalClause;
+   content: text;
+   id: nat;
+   summary: opt text;
+   title: text;
+   uploadedAt: int;
+   userId: principal;
+ };
+type LegalClause = 
+ record {
+   clauseType: text;
+   docId: nat;
+   endPos: int;
+   id: nat;
+   startPos: int;
+   "text": text;
+ };
+type Language = 
+ variant {
+   english;
+   hindi;
+   nagpuri;
+ };
+type KnowledgeStats = 
+ record {
+   indexedDocs: nat;
+   totalChunks: nat;
+   totalDocuments: nat;
+ };
+type KnowledgeResult = 
+ record {
+   chunk: KnowledgeChunk;
+   score: float64;
+ };
+type KnowledgeDocument = 
+ record {
+   chunks: vec KnowledgeChunk;
+   content: text;
+   docType: DocumentType;
+   id: nat;
+   indexStatus: IndexStatus;
+   title: text;
+   uploadedAt: int;
+   userId: principal;
+ };
+type KnowledgeChunk = 
+ record {
+   chunkIndex: nat;
+   docId: nat;
+   embeddingVector: vec float64;
+   id: nat;
+   similarity: float64;
+   "text": text;
+ };
+type IoTDevice = 
+ record {
+   deviceType: text;
+   id: nat;
+   isOnline: bool;
+   lastSeen: int;
+   name: text;
+   state: text;
+ };
+type IndexStatus = 
+ variant {
+   failed;
+   indexed;
+   pending;
+ };
+type Holding = 
+ record {
+   avgCost: float64;
+   quantity: nat;
+   symbol: text;
+ };
+type GeofenceZone = 
+ record {
+   centerLat: float64;
+   centerLng: float64;
+   id: nat;
+   isActive: bool;
+   name: text;
+   radius: float64;
+ };
+type GeofenceAlert = 
+ record {
+   alertType: text;
+   assetId: nat;
+   id: nat;
+   timestamp: int;
+   zoneId: nat;
+ };
+type GeneticProfile = 
+ record {
+   dominantDomain: text;
+   dominantLanguage: text;
+   formalityLevel: float64;
+   lastAdapted: int;
+   preferences: vec UserPreference;
+   technicalDepth: float64;
+   userId: text;
+ };
+type DroneStatus = 
+ variant {
+   emergency;
+   flying;
+   idle;
+   landing;
+ };
+type DroneState = 
+ record {
+   altitude: float64;
+   battery: int;
+   id: nat;
+   lat: float64;
+   lng: float64;
+   speed: float64;
+   status: DroneStatus;
+   timestamp: int;
+ };
+type DroneAlert = 
+ record {
+   alertType: text;
+   description: text;
+   droneId: nat;
+   id: nat;
+   timestamp: int;
+ };
+type DocumentType = 
+ variant {
+   docx;
+   pdf;
+   txt;
+   url;
+ };
+type DetectionObject = 
+ record {
+   bbox: BoundingBox;
+   confidence: float64;
+   highAlert: bool;
+   name: text;
+ };
+type DetectionHistoryRecord = 
+ record {
+   cameraId: text;
+   id: nat;
+   objects: vec DetectionObject;
+   timestamp: int;
+ };
+type ChatMessage = 
+ record {
+   content: text;
+   role: text;
+ };
+type CameraFeed = 
+ record {
+   id: nat;
+   isActive: bool;
+   name: text;
+   streamUrl: text;
+ };
+type CallRecord = 
+ record {
+   callSid: text;
+   callerPhone: text;
+   duration: nat;
+   id: nat;
+   status: text;
+   timestamp: int;
+   transcript: text;
+ };
+type CallInitRequest = 
+ record {
+   message: text;
+   toPhone: text;
+ };
+type BoundingBox = 
+ record {
+   height: float64;
+   width: float64;
+   x: float64;
+   y: float64;
+ };
+type AgentType = 
+ variant {
+   critic;
+   executor;
+   memory;
+   planner;
+   research;
+ };
+type AgentTask = 
+ record {
+   agentType: AgentType;
+   id: nat;
+   input: text;
+   output: opt text;
+   status: AgentStatus;
+   timestamp: int;
+ };
+type AgentStreamStep = 
+ record {
+   agentType: text;
+   completedAt: int;
+   output: text;
+   startedAt: int;
+   status: text;
+ };
+type AgentStatus = 
+ variant {
+   complete;
+   failed;
+   idle;
+   running;
+ };
+type AgentMetrics = 
+ record {
+   avgDuration: int;
+   completedTasks: nat;
+   failedTasks: nat;
+   totalTasks: nat;
+ };
+type AgentChain = 
+ record {
+   currentStep: nat;
+   goal: text;
+   id: nat;
+   status: AgentStatus;
+   tasks: vec AgentTask;
+ };
+type AdminLog = 
+ record {
+   action: AdminAction;
+   adminId: principal;
+   id: nat;
+   target: text;
+   timestamp: int;
+ };
+type AdminAction = 
+ variant {
+   banUser;
+   deleteDoc;
+   reindex;
+   updateTier;
+   uploadDoc;
+ };
+service : {
+  addGeofenceZone: (zoneName: text, centerLat: float64, centerLng: float64,
+   radius: float64) -> (nat);
+  addMessage: (role: text, content: text) -> (Message);
+  adminLogin: (username: text, password: text) -> (LoginResult);
+  askDocumentQuestion: (docId: nat, question: text) -> (text);
+  banUser: (userId: principal) -> (bool);
+  callLLM: (messages: vec ChatMessage, apiKey: text, personality: text) ->
+   (text);
+  cancelSubscription: () -> ();
+  clearHistory: () -> ();
+  clearMyFaceData: () -> (bool);
+  createChain: (goal: text) -> (nat);
+  createStreamSession: () -> (StreamSession);
+  deleteDocument: (docId: nat) -> (bool);
+  deleteLegalDocument: (docId: nat) -> (bool);
+  deleteVoiceProfile: (userId: text, profileId: text) -> (bool);
+  demoLogin: () -> (LoginResult);
+  enrollFace: (encoding: text) -> (bool);
+  enrollVoiceProfile: (userId: text, name: text, relationship: text,
+   mfccFeatures: vec float64) -> (VoiceProfile);
+  executeSimulatedTrade: (userId: text, symbol: text, action:
+   TransactionAction, quantity: nat) -> (Transaction);
+  exportAnalytics: () -> (text) query;
+  exportDocumentSummary: (docId: nat, format: text) -> (LegalExport) query;
+  extractDocumentClauses: (docId: nat) -> (vec LegalClause);
+  getActiveStream: () -> (opt StreamSession) query;
+  getAdminLogs: () -> (vec AdminLog) query;
+  getAgentMetrics: () -> (AgentMetrics) query;
+  getCallLogs: () -> (vec CallRecord) query;
+  getCallRecord: (id: nat) -> (opt CallRecord) query;
+  getCameraFeeds: () -> (vec CameraFeed) query;
+  getChain: (chainId: nat) -> (opt AgentChain) query;
+  getDetectionAlerts: () -> (vec DroneAlert) query;
+  getDetectionHistory: () -> (vec DetectionHistoryRecord) query;
+  getDrone: (droneId: nat) -> (opt DroneState) query;
+  getGeneticProfile: (userId: text) -> (GeneticProfile) query;
+  getGeofenceAlerts: () -> (vec GeofenceAlert) query;
+  getHistory: () -> (vec Message) query;
+  getKnowledgeStats: () -> (KnowledgeStats) query;
+  getLegalDocument: (docId: nat) -> (opt LegalDocument) query;
+  getMRRTrend: (months: nat) -> (vec RevenueMetrics) query;
+  getMqttDeviceHistory: (deviceId: nat) -> (vec MqttDeviceHistory) query;
+  getMqttDevices: () -> (vec MqttDevice) query;
+  getMyMetrics: () -> (UserMetrics) query;
+  getPortfolio: (userId: text) -> (Portfolio) query;
+  getRevenueMetrics: (month: text) -> (RevenueMetrics) query;
+  getSettings: () -> (Settings) query;
+  getStockHistory: (symbol: text, days: nat) -> (vec StockPrice) query;
+  getStockPrice: (symbol: text) -> (StockPrice) query;
+  getStockSymbols: () -> (vec StockSymbol) query;
+  getStreamSession: (id: nat) -> (opt StreamSession) query;
+  getSubscriptionStatus: () -> (SubscriptionStatus) query;
+  getSystemHealth: () ->
+   (record {
+      agentTasksCount: nat;
+      messagesCount: nat;
+      uptime: int;
+      usersCount: nat;
+    }) query;
+  getSystemMetrics: () -> (SystemMetrics) query;
+  getTrackingAsset: (assetId: nat) -> (opt TrackingAsset) query;
+  getTransactionHistory: (userId: text) -> (vec Transaction) query;
+  getUserProfile: () -> (opt UserProfile) query;
+  getUserRole: () -> (opt UserRole) query;
+  getUserSubscription: () -> (opt SubscriptionTier) query;
+  getVoiceSessions: () -> (vec VoiceSession) query;
+  getVoiceSettings: () -> (VoiceSettings) query;
+  hasFaceEnrolled: () -> (bool) query;
+  initCallModule: () -> (bool);
+  initDetectionModule: () -> (bool);
+  initMqttModule: () -> (bool);
+  listAllUsers: () -> (vec UserProfile) query;
+  listChains: () -> (vec AgentChain) query;
+  listDocuments: () -> (vec KnowledgeDocument) query;
+  listDrones: () -> (vec DroneState) query;
+  listEnrolledFaces: () -> (vec principal) query;
+  listGeofences: () -> (vec GeofenceZone) query;
+  listIoTDevices: () -> (vec IoTDevice) query;
+  listLegalDocuments: () -> (vec LegalDocument) query;
+  listTrackingAssets: () -> (vec TrackingAsset) query;
+  listVoiceProfiles: (userId: text) -> (vec VoiceProfile) query;
+  logVoiceSession: (language: text, transcription: text, synthesis: text) ->
+   (nat);
+  logout: () -> ();
+  makeCall: (req: CallInitRequest) -> (CallRecord);
+  matchVoiceProfile: (userId: text, inputMfcc: vec float64) ->
+   (opt VoiceMatch) query;
+  recordInteraction: (userId: text, topicTags: vec text) -> ();
+  register: (name: text, email: text) -> (RegisterResult);
+  runChain: (chainId: nat) -> (text);
+  runYoloDetection: (req: YoloDetectionRequest) -> (YoloDetectionResult);
+  saveSettings: (personality: text, glowColor: text, apiKey: text) -> ();
+  saveVoiceSettings: (settings: VoiceSettings) -> (bool);
+  searchKnowledge: (searchQuery: text, topK: nat) -> (vec KnowledgeResult);
+  sendIoTCommand: (deviceId: nat, command: text, value: text) -> (bool);
+  sendMqttCommand: (cmd: MqttCommand) -> (MqttCommandResult);
+  setDroneCommand: (droneId: nat, command: text) -> (bool);
+  simulateMovement: () -> (bool);
+  summarizeLegalDocument: (docId: nat) -> (text);
+  trackEvent: (eventType: text, metadata: text) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  translateForLanguage: ("text": text, language: text) -> (text);
+  triggerReindex: () -> (bool);
+  triggerSimulation: () -> (bool);
+  twilioTransform: (input: TransformationInput) ->
+   (TransformationOutput) query;
+  updateAgentStep: (sessionId: nat, step: AgentStreamStep) -> (bool);
+  updateGeneticPreference: (userId: text, key: text, value: text, weight:
+   float64) -> ();
+  updateStreamChunk: (sessionId: nat, chunk: StreamChunk) -> (bool);
+  updateSubscription: (tier: SubscriptionTier) -> ();
+  updateUserTier: (userId: principal, tier: text) -> (bool);
+  upgradeSubscription: (tier: SubscriptionTier) -> (bool);
+  uploadDocument: (title: text, docType: text, content: text) -> (nat);
+  uploadLegalDocument: (title: text, content: text) -> (nat);
+  verifyFaceLogin: (encoding: text) -> (bool, opt principal);
+}
